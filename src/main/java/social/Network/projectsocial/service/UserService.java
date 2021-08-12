@@ -41,6 +41,10 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User findUserByUserCode (String code){
+        return userRepository.findUserByUserCode(code).orElseThrow(()-> new UserNotFoundException("User by code" + code + "Not found"));
+    }
+
     public User findUserById(long id){
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User by id" + id + "Not found"));
     }

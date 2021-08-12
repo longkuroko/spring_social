@@ -23,9 +23,29 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-
-    @PostMapping("/register")
-    public User create_User(@RequestBody  User user){
-        return userService.createUser(user);
+//    @GetMapping("/find/{id}")
+//    public ResponseEntity<User> getUserById(@PathVariable("id") Long id){
+//        User user = userService.findUserById(id);
+//        return new ResponseEntity<>(user, HttpStatus.OK);
+//    }
+    @GetMapping("/find/{code}")
+    public ResponseEntity<User> getUserByUserCode(@PathVariable("code") String code){
+        User user = userService.findUserByUserCode(code);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<User> updateUser(@RequestBody User user){
+        User updateUser = userService.updateUser(user);
+        return new ResponseEntity<>(updateUser, HttpStatus.OK);
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable("id") Long id){
+        userService.deleteUserById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+
+
 }
