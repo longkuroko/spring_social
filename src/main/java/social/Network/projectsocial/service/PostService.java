@@ -31,6 +31,7 @@ public class PostService {
     }
 
     public Post updatePost(Post post){
+
         return postRepository.save(post);
     }
 

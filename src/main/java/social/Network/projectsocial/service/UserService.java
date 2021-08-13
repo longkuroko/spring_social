@@ -38,6 +38,8 @@ public class UserService {
     }
 
     public User updateUser(User user){
+        Date now = new Date();
+        user.setUpdate_At(now);
         return userRepository.save(user);
     }
 

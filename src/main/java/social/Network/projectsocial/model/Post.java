@@ -5,12 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.security.Timestamp;
 
 @Entity
 @Table
 @Data
 @NoArgsConstructor
-public class Post {
+public class Post extends Auditable<String>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
@@ -23,6 +24,7 @@ public class Post {
     @JoinColumn(name = "created_by")
     private User createdBy;
 
-
+//    private Timestamp createdAt;
+//    private Timestamp updateAt;
 
 }
