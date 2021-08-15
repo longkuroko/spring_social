@@ -6,9 +6,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.security.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table
+@Table(name = "post")
 @Data
 @NoArgsConstructor
 public class Post extends Auditable<String>{
@@ -24,7 +26,9 @@ public class Post extends Auditable<String>{
     @JoinColumn(name = "created_by")
     private User createdBy;
 
-//    private Timestamp createdAt;
-//    private Timestamp updateAt;
+    //Comment Mapping: One to many: Post -> Comments
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments = new ArrayList<>();
+
 
 }
