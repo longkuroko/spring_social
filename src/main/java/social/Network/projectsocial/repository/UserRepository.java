@@ -15,6 +15,7 @@ public interface UserRepository extends JpaRepository<User , Long> {
     Optional<User> findByEmail(String email);
 
     User findByUsername(String username);
+    Optional<User> findByUsernameOrEmail(String username, String email);
     Optional<User> findUserByUserCode(String userCode);
 
 
@@ -23,4 +24,8 @@ public interface UserRepository extends JpaRepository<User , Long> {
     @Query(
             "UPDATE User a " + "SET a.isEnable = TRUE WHERE a.email = ?1")
     int enableUser(String email);
+
+    Boolean existsByUsername(String username);
+
+    Boolean existsByEmail(String email);
 }
