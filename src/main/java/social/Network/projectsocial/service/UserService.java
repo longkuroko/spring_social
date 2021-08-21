@@ -85,7 +85,7 @@ public class UserService {
                         Role.USER
                 )
         );
-        String link = "http://localhost:8080/registration/confirm?token="+token;
+        String link = "http://localhost:8080/auth/confirm?token="+token;
         emailSender.send(
                 request.getEmail(),
                 buildEmail(request.getUsername(), link));
@@ -93,7 +93,6 @@ public class UserService {
         return token;
 
     }
-
     //confirm  token email verified
     @Transactional
     public String confirmToken(String token){
