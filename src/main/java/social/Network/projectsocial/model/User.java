@@ -1,5 +1,6 @@
 package social.Network.projectsocial.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,7 +16,6 @@ import java.util.*;
 @Table(name = "users")
 @Getter
 @Setter
-@NoArgsConstructor
 @EqualsAndHashCode
 public class User implements Serializable, UserDetails {
     @Id
@@ -34,6 +34,7 @@ public class User implements Serializable, UserDetails {
 
     @NotEmpty
     @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @NotEmpty
@@ -48,25 +49,22 @@ public class User implements Serializable, UserDetails {
     private boolean isEnable = false;
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    public User(String userCode, String imgUrl, String username, String password, String email, String description,
-                Date create_At, Date update_At, Role role) {
-        this.userCode = userCode;
-        this.imgUrl = imgUrl;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.description = description;
-        this.create_At = create_At;
-        this.update_At = update_At;
-        this.role = role;
-    }
+    @Enumerated(EnumType.STRING)
+    private AuthProvider authProvider;
+    private String providerI;
 
     public User(String username, String email, String  password, Role role){
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
+
+    }
+    public User(){
+        
+    }
+
+    public User(User user) {
     }
 
     @Override
@@ -74,6 +72,7 @@ public class User implements Serializable, UserDetails {
         SimpleGrantedAuthority authority =
                 new SimpleGrantedAuthority(role.name());
         return Collections.singletonList(authority);
+
     }
 
     @Override
@@ -83,7 +82,7 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     public String  getEmail(){
@@ -110,10 +109,6 @@ public class User implements Serializable, UserDetails {
         return isEnable;
     }
 
-    //    private  boolean accountVerified;
-//
-//    @OneToMany(mappedBy = "user")
-//    private Set<EmailSecureToken> tokens;
 
 
 }

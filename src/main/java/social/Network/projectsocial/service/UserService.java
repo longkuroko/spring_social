@@ -4,9 +4,11 @@ package social.Network.projectsocial.service;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import social.Network.projectsocial.config.PasswordEncoder;
 import social.Network.projectsocial.exception.UserNotFoundException;
 import social.Network.projectsocial.model.Role;
 import social.Network.projectsocial.model.User;
@@ -17,7 +19,9 @@ import social.Network.projectsocial.security.email.RegistrationRequest;
 import social.Network.projectsocial.security.token.ConfirmationToken;
 import social.Network.projectsocial.security.token.ConfirmationTokenService;
 
+import javax.mail.MessagingException;
 import javax.transaction.Transactional;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -38,8 +42,15 @@ public class UserService {
     private ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+
 
 
     public User createUser(User user){
@@ -85,7 +96,7 @@ public class UserService {
                         Role.USER
                 )
         );
-        String link = "http://localhost:8080/registration/confirm?token="+token;
+        String link = "http://localhost:8080/auth/confirm?token="+token;
         emailSender.send(
                 request.getEmail(),
                 buildEmail(request.getUsername(), link));

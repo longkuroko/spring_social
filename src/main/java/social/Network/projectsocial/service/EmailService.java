@@ -16,7 +16,6 @@ import javax.mail.internet.MimeMessage;
 
 @Service
 @AllArgsConstructor
-
 public class EmailService implements EmailSender {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
@@ -30,7 +29,7 @@ public class EmailService implements EmailSender {
             helper.setText(email, true);
             helper.setTo(to);
             helper.setSubject("Confirm your email");
-            helper.setFrom("longsteve.jobs@gmail.com");
+                helper.setFrom("longsteve.jobs@gmail.com");
             mailSender.send(mimeMessage);
 
         }catch (MessagingException e){

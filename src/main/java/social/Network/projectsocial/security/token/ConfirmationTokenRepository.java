@@ -10,10 +10,8 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository
-public interface ConfirmationTokenRepository
-        extends JpaRepository<ConfirmationToken, Long> {
+public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationToken, Long> {
     Optional<ConfirmationToken> findByToken(String token);
-
     @Transactional
     @Modifying
     @Query("UPDATE ConfirmationToken c " +
